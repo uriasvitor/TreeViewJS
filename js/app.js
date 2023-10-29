@@ -7,14 +7,47 @@
 
     getAddParent.forEach(function(parentButton){
         parentButton.addEventListener("click",()=>{
-            parentName = prompt('Write name of parent')
             randomId = generateRandomId();
             createParent()
         })
     })
 
+    getTree.addEventListener("click", function(event) {
+        const target = event.target;
+
+        if (target.classList.contains("add-children")) {
+            const parentId = parseInt(target.closest(".parent-section").id);
+            const closestChildrenSection = target.closest(".children-section");
+
+            const childrenId = closestChildrenSection ? parseInt(closestChildrenSection.id) : parentId;
+
+            createChildren(childrenId)
+        }
+        
+        if (target.classList.contains("hide-childrenButton")) {
+            const currentChildren = target.parentElement.parentNode.parentNode
+
+            if(!currentChildren.classList.contains('children-section')){
+                return
+            }
+
+            for(let i = 1; i < currentChildren.children.length; i++){
+                currentChildren.children[i];
+                console.log(currentChildren.children[i].classList.toggle('hide'))
+            }   
+
+            
+        }
+    });
+
     function createParent(){
-       
+
+        parentName = prompt("Write a Parent Name");
+
+        if(!parentName){
+            return
+        }
+
         var parentCode = `
         <div id="${randomId}" class="parent-section" >
         <div class="node-content">
@@ -28,16 +61,19 @@
         </div>`;
 
         getTree.insertAdjacentHTML('beforeend', parentCode);
-        triggerChildrenEvent()
     }
 
     
     
-    function createChildren(parentId){
-        const parent = document.getElementById(parentId)
-        console.log(parentId)
-        console.log(parent)
-        childrenName = prompt('Write your children name')
+    function createChildren(currentId){
+        
+        const parent = document.getElementById(currentId)
+        childrenName = prompt("Write a Child Name");
+
+        if(childrenName == undefined || childrenName == '' || childrenName == null){
+            return
+        }
+        
         counterChildren()
             
         var childrenCode = `
@@ -55,22 +91,9 @@
             </div>`;
 
             parent.insertAdjacentHTML('beforeend', childrenCode);
-            triggerChildrenEvent()
     }
 
-    function triggerChildrenEvent(){
-        const getAllChildrenButton = document.querySelectorAll(".add-children")
-
-        getAllChildrenButton.forEach((children)=>{
-            children.addEventListener("click",()=>{
-                console.log(children.parentElement.parentNode.id)
-                parentId = parseInt(children.parentElement.parentNode.id)
-                createChildren(parentId)
-            })
-        })
-
-    }
-
+   
     function counterChildren(){
         counter++
     }
@@ -78,4 +101,6 @@
     function generateRandomId(){  
        return Math.floor(Math.random() * 100)
     }
+
+
 })()
