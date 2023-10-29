@@ -63,4 +63,5 @@ h1,p,span,div{
 .children-section{
     display: flex;
     margin:12px 0 0 40px ;
+    flex-direction: column;
 }
