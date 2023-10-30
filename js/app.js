@@ -27,15 +27,10 @@
         if (target.classList.contains("hide-childrenButton")) {
             const currentChildren = target.parentElement.parentNode.parentNode
 
-            if(!currentChildren.classList.contains('children-section')){
-                return
-            }
-
             for(let i = 1; i < currentChildren.children.length; i++){
                 currentChildren.children[i];
                 console.log(currentChildren.children[i].classList.toggle('hide'))
             }   
-
             
         }
     });
@@ -82,7 +77,8 @@
             <div class="node-content">
                 <div class="inner-content">
                     <button class="hide-childrenButton"> - </button>
-                    <span>|</span>
+                    <span class="treeline"></span>
+                    <span class="intersectionline"></span>
                     <input type="checkbox">
                     <div class="title-parent">${childrenName}</div>
                 </div>
